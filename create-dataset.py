@@ -24,7 +24,7 @@ random.shuffle(image_paths)
 
 row_labels = (
     "filename", "height", "width",
-    "label", "xmin", "ymin", "xmax", "ymax"
+    "class", "xmin", "ymin", "xmax", "ymax"
 )
 
 for i, image_path in enumerate(image_paths):
