@@ -3,6 +3,7 @@ from typing import Iterable
 import xml.etree.ElementTree as et
 import os
 import csv
+from csv import DictWriter
 import random
 import shutil
 
@@ -16,19 +17,18 @@ if trainExists == True and testExists == True:
 files_train = os.listdir("./dataset/train")
 files_test = os.listdir("./dataset/test")
 
-names: list[str] = []
-xmins: list[str] = []
-ymins: list[str] = []
-xmaxs: list[str] = []
-ymaxs: list[str] = []
-heights: list[str] = []
-widths: list[str] = []
-labels: list[str] = []
+test_labels_written = False
+train_labels_written = False
 
 # this segment of the script will randomize the images
 image_paths = os.listdir('dataset/images')
 random.shuffle(image_paths)
 
+
+row_labels = (
+    "filename", "height", "width",
+    "label", "xmin", "ymin", "xmax", "ymax"
+)
 
 for i, image_path in enumerate(image_paths):
     print(image_path)
@@ -66,20 +66,26 @@ def getData(file: str, path: str):
     return name, height, width, label, xmin, ymin, xmax, ymax
 
 
-def writeManifest(path: str, data: Iterable):
-    file = open(path, newline="", mode="a")
-
-    writer = csv.writer(file, "excel")
-
-    writer.writerow(data)
-
-
 for file in files_train:
     if (file.endswith("xml")):
         dat = getData(file, "./dataset/train/")
-        writeManifest("./dataset/train_labels.csv", dat)
+        file = open("./dataset/train_labels.csv", newline="", mode="a")
+        writer = csv.writer(file, "excel")
+
+        if train_labels_written == False:
+            writer.writerow(row_labels)
+            train_labels_written = True
+
+        writer.writerow(dat)
 
 for file in files_test:
     if (file.endswith("xml")):
         dat = getData(file, "./dataset/test/")
-        writeManifest("./dataset/test_labels.csv", dat)
+        file = open("./dataset/test_labels.csv", newline="", mode="a")
+        writer = csv.writer(file, "excel")
+
+        if test_labels_written == False:
+            writer.writerow(row_labels)
+            test_labels_written = True
+
+        writer.writerow(dat)
