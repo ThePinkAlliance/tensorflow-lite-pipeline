@@ -1,11 +1,8 @@
-import io
-from typing import Iterable
 import xml.etree.ElementTree as et
-import os
-import csv
-from csv import DictWriter
 import random
 import shutil
+import csv
+import os
 
 trainExists = os.path.isfile("./dataset/train_labels.csv")
 testExists = os.path.isfile("./dataset/test_labels.csv")
