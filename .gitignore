@@ -3,3 +3,4 @@ dataset/images/*
 dataset/train/*
 dataset/test/*
 dataset/annotations/*
+*.tflite
