@@ -1,15 +1,22 @@
 import xml.etree.ElementTree as et
-import random
-import shutil
-import csv
 import os
+import csv
+import shutil
+import random
 
 trainExists = os.path.isfile("./dataset/train_labels.csv")
 testExists = os.path.isfile("./dataset/test_labels.csv")
 
+trainDirExists = os.path.isdir("./dataset/train")
+testDirExists = os.path.isdir("./dataset/test")
+
 if trainExists == True and testExists == True:
     os.remove("./dataset/train_labels.csv")
     os.remove("./dataset/test_labels.csv")
+
+if trainDirExists == False and testDirExists == False:
+    os.mkdir("./dataset/train")
+    os.mkdir("./dataset/test")
 
 files_train = os.listdir("./dataset/train")
 files_test = os.listdir("./dataset/test")
