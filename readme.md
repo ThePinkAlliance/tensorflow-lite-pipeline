@@ -50,3 +50,10 @@ python create-dataset.py
 # train the tensorflow lite model
 python new.py
 ```
+
+#### Test trained model
+
+```powershell
+# you can specify an image or let it pick one
+python test.py --image ./test.jpg
+```

@@ -8,6 +8,7 @@ import tensorflow as tf
 
 from tflite_model_maker import object_detector
 from tflite_model_maker import model_spec
+from argparse import ArgumentParser
 
 import numpy as np
 import cv2
@@ -17,32 +18,23 @@ assert tf.__version__.startswith('2')
 tf.get_logger().setLevel('ERROR')
 logging.set_verbosity(logging.ERROR)
 
+parser = ArgumentParser()
+parser.add_argument("--image", dest="image",
+                    default="./dataset/images/" + os.listdir('./dataset/images/')[9])
+args = parser.parse_args()
+
+TEMP_FILE = args.image
+
 spec = model_spec.get('efficientdet_lite0')
 
-test_data: DetectorDataLoader = object_detector.DataLoader.from_pascal_voc(
-    "./dataset/test", "./dataset/test", label_map={1: "red_shipping"})
-
-train_data: DetectorDataLoader = object_detector.DataLoader.from_pascal_voc(
-    "./dataset/train", "./dataset/train", label_map={1: "red_shipping"})
-
-model = object_detector.create(train_data, model_spec=spec, batch_size=8,
-                               train_whole_model=True, validation_data=test_data)
-
-model.evaluate(test_data)
-
-model.export(export_dir='.')
-model.evaluate_tflite('model.tflite', test_data)
-
-# ---------------------------------------------------------------------------- #
-#                                Test the model                                #
-# ---------------------------------------------------------------------------- #
+# model.evaluate_tflite('model.tflite', test_data)
 
 model_path = 'model.tflite'
 
 # Load the labels into a list
-classes = ['???'] * model.model_spec.config.num_classes
-label_map = model.model_spec.config.label_map
-for label_id, label_name in label_map.as_dict().items():
+classes = ['???'] * 1
+label_map = {1: "red_shipping"}
+for label_id, label_name in label_map.items():
     classes[label_id-1] = label_name
 
 # Define a list of colors for visualization
@@ -145,11 +137,8 @@ def run_odt_and_draw_results(image_path, interpreter, threshold=0.5):
 # @param {type:"string"}
 DETECTION_THRESHOLD = 0.3  # @param {type:"number"}
 
-TEMP_FILE = os.listdir('./dataset/images/')[2]
-
-im = Image.open("./dataset/images/"+TEMP_FILE)
+im = Image.open(TEMP_FILE)
 im.thumbnail((512, 512), Image.ANTIALIAS)
-# im.save(TEMP_FILE, 'JPG')
 
 # Load the TFLite model
 interpreter = tf.lite.Interpreter(model_path=model_path)
@@ -162,5 +151,8 @@ detection_result_image = run_odt_and_draw_results(
     threshold=DETECTION_THRESHOLD
 )
 
+
 # Show the detection result
-Image.fromarray(detection_result_image)
+# Detection result is an 8 bit image that might be the cause of washed image
+cv2.imshow("test image", detection_result_image)
+cv2.waitKey(0)
