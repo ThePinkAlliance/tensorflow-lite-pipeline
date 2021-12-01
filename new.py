@@ -14,16 +14,21 @@ import cv2
 
 assert tf.__version__.startswith('2')
 
+# list of labels in dataset
+label_map = {
+    1: "red_shipping"
+}
+
 tf.get_logger().setLevel('ERROR')
 logging.set_verbosity(logging.ERROR)
 
 spec = model_spec.get('efficientdet_lite0')
 
 test_data: DetectorDataLoader = object_detector.DataLoader.from_pascal_voc(
-    "./dataset/test", "./dataset/test", label_map={1: "red_shipping"})
+    "./dataset/test", "./dataset/test", label_map=label_map)
 
 train_data: DetectorDataLoader = object_detector.DataLoader.from_pascal_voc(
-    "./dataset/train", "./dataset/train", label_map={1: "red_shipping"})
+    "./dataset/train", "./dataset/train", label_map=label_map)
 
 model = object_detector.create(train_data, model_spec=spec, batch_size=8,
                                train_whole_model=True, validation_data=test_data)

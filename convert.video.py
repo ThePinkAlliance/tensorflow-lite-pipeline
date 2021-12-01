@@ -1,10 +1,10 @@
 import argparse
 import os
 
-images_dir_exist = os.path.isdir("./dataset/images")
+images_dir_exist = os.path.isdir("./dataset/images-2")
 
 if images_dir_exist == False:
-    os.mkdir("./dataset/images/")
+    os.mkdir("./dataset/images-2/")
 
 print("\n \n \n=============================================")
 print("MAKE SURE NO IMAGES ARE IN THE IMAGES FOLDER!")
@@ -20,6 +20,6 @@ vid_path = args.vid
 
 if vid_path != None:
     os.system("ffmpeg -i " + vid_path +
-              " -vf fps=" + str(args.frames) + " ./dataset/images/img%02d.jpg")
+              " -vf fps=" + str(args.frames) + " ./dataset/images-2/img%02d.jpg")
 else:
     print("::> sPlease define --video flag")

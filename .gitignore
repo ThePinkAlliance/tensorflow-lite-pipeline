@@ -1,6 +1,3 @@
 venv/
-dataset/images/*
-dataset/train/*
-dataset/test/*
-dataset/annotations/*
+dataset/*
 *.tflite

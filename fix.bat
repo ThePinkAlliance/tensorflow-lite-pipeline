@@ -1,0 +1,1 @@
+python metadata.fixer.py --dir-annotaion "C:\Users\capts\Desktop\code\python\vision\dataset\annotation-2" --dir-image "C:\Users\capts\Desktop\code\python\vision\dataset\images-2" --img-out "C:\Users\capts\Desktop\code\python\vision\dataset\images"
