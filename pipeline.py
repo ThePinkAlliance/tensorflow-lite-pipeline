@@ -85,6 +85,3 @@ def verifyIntegerty() -> bool:
             isFileMissing("./dataset/annotation-1/" + _ann)
 
     return missingFiles
-
-
-verifyIntegerty()
