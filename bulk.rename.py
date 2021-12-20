@@ -24,4 +24,6 @@ for filef in files:
     locationNew = dir + "/" + char + filef
     os.rename(location, locationNew)
 
+    print("RENAME: " + filef)
+
 print("=== DONE! ===")

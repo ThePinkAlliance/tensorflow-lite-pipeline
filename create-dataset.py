@@ -4,28 +4,30 @@ import csv
 import shutil
 import random
 
+from pipeline import IMAGES_DIRECTORY, TESTING_DIRECTORY, TRAINING_DIRECTORY
+
 trainExists = os.path.isfile("./dataset/train_labels.csv")
 testExists = os.path.isfile("./dataset/test_labels.csv")
 
-trainDirExists = os.path.isdir("./dataset/train")
-testDirExists = os.path.isdir("./dataset/test")
+trainDirExists = os.path.isdir(TRAINING_DIRECTORY)
+testDirExists = os.path.isdir(TESTING_DIRECTORY)
 
 if trainExists == True and testExists == True:
     os.remove("./dataset/train_labels.csv")
     os.remove("./dataset/test_labels.csv")
 
 if trainDirExists == False and testDirExists == False:
-    os.mkdir("./dataset/train")
-    os.mkdir("./dataset/test")
+    os.mkdir(TRAINING_DIRECTORY)
+    os.mkdir(TESTING_DIRECTORY)
 
-files_train = os.listdir("./dataset/train")
-files_test = os.listdir("./dataset/test")
+files_train = os.listdir(TRAINING_DIRECTORY)
+files_test = os.listdir(TESTING_DIRECTORY)
 
 test_labels_written = False
 train_labels_written = False
 
 # this segment of the script will randomize the images
-image_paths = os.listdir('dataset/images')
+image_paths = os.listdir(IMAGES_DIRECTORY)
 random.shuffle(image_paths)
 
 
@@ -52,7 +54,7 @@ for i, image_path in enumerate(image_paths):
 
 
 def getData(file: str, path: str):
-    x = et.parse(path + file.title())
+    x = et.parse(path + "\\" + file.title())
     root = x.getroot()
 
     name = root[1].text
@@ -72,7 +74,7 @@ def getData(file: str, path: str):
 
 for file in files_train:
     if (file.endswith("xml")):
-        dat = getData(file, "./dataset/train/")
+        dat = getData(file, TRAINING_DIRECTORY)
         file = open("./dataset/train_labels.csv", newline="", mode="a")
         writer = csv.writer(file, "excel")
 
@@ -84,7 +86,7 @@ for file in files_train:
 
 for file in files_test:
     if (file.endswith("xml")):
-        dat = getData(file, "./dataset/test/")
+        dat = getData(file, TESTING_DIRECTORY)
         file = open("./dataset/test_labels.csv", newline="", mode="a")
         writer = csv.writer(file, "excel")
 

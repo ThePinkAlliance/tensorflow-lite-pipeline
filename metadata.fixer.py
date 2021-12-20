@@ -11,14 +11,12 @@ parser.add_argument("--dir-annotaion",
                     default="./annotation-2", dest="dirAnnotation")
 parser.add_argument("--dir-image", default="./image-2", dest="dirImage")
 parser.add_argument("--img-out", dest="imgout", default="./images")
-parser.add_argument("--char", default="3", dest="char")
 
 args = parser.parse_args()
 
 dirAnnotations = args.dirAnnotation
 dirImages = args.dirImage
 dirImgOut = args.imgout
-char = args.char
 
 if os.path.exists(dirAnnotations) == False:
     os.mkdir(dirAnnotations)

@@ -3,6 +3,8 @@ from tensorflow_examples.lite.model_maker.core.task.model_spec import IMAGE_CLAS
 from absl import logging
 from PIL import Image
 
+from pipeline import verifyIntegerty
+
 import os
 import tensorflow as tf
 
@@ -12,12 +14,15 @@ from tflite_model_maker import model_spec
 import numpy as np
 import cv2
 
+from pipeline import LABEL_MAP, WORKING_DIR
+
 assert tf.__version__.startswith('2')
 
-# list of labels in dataset
-label_map = {
-    1: "red_shipping"
-}
+files_missing = verifyIntegerty()
+
+if files_missing:
+    print("\u001b[32mannotations and images do not match!")
+    exit()
 
 tf.get_logger().setLevel('ERROR')
 logging.set_verbosity(logging.ERROR)
@@ -25,13 +30,14 @@ logging.set_verbosity(logging.ERROR)
 spec = model_spec.get('efficientdet_lite0')
 
 test_data: DetectorDataLoader = object_detector.DataLoader.from_pascal_voc(
-    "./dataset/test", "./dataset/test", label_map=label_map)
+    "./dataset/test", "./dataset/test", label_map=LABEL_MAP)
 
 train_data: DetectorDataLoader = object_detector.DataLoader.from_pascal_voc(
-    "./dataset/train", "./dataset/train", label_map=label_map)
+    "./dataset/train", "./dataset/train", label_map=LABEL_MAP)
 
 model = object_detector.create(train_data, model_spec=spec, batch_size=8,
                                train_whole_model=True, validation_data=test_data)
+
 
 model.evaluate(test_data)
 
@@ -148,11 +154,11 @@ def run_odt_and_draw_results(image_path, interpreter, threshold=0.5):
 
 
 # @param {type:"string"}
-DETECTION_THRESHOLD = 0.3  # @param {type:"number"}
+DETECTION_THRESHOLD = 0.97  # @param {type:"number"}
 
-TEMP_FILE = os.listdir('./dataset/images/')[2]
+TEMP_FILE = os.listdir(WORKING_DIR + '\\dataset\\images\\')[2]
 
-im = Image.open("./dataset/images/"+TEMP_FILE)
+im = Image.open(WORKING_DIR + "\\dataset\\images\\" + TEMP_FILE)
 im.thumbnail((512, 512), Image.ANTIALIAS)
 # im.save(TEMP_FILE, 'JPG')
 

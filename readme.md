@@ -31,8 +31,8 @@ pip install opencv-python
 The video converter script has two flags `--video` to specify the video location
 and `--frame` will tell ffmpeg how many frames it should generate per second three is a good median.
 
-```powershell
-python convert.video.py --video ./dataset/videos/one.mp4
+```ps
+python convert.video.py --video ./dataset/videos/one.mp4 --dir-name images-2
 ```
 
 #### Create dataset
