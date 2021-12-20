@@ -4,17 +4,17 @@ import csv
 import shutil
 import random
 
-from pipeline import IMAGES_DIRECTORY, TESTING_DIRECTORY, TRAINING_DIRECTORY
+from pipeline import DATASET_DIR, IMAGES_DIRECTORY, TESTING_DIRECTORY, TRAINING_DIRECTORY
 
-trainExists = os.path.isfile("./dataset/train_labels.csv")
-testExists = os.path.isfile("./dataset/test_labels.csv")
+trainExists = os.path.isfile("./" + DATASET_DIR + "/train_labels.csv")
+testExists = os.path.isfile("./" + DATASET_DIR + "/test_labels.csv")
 
 trainDirExists = os.path.isdir(TRAINING_DIRECTORY)
 testDirExists = os.path.isdir(TESTING_DIRECTORY)
 
 if trainExists == True and testExists == True:
-    os.remove("./dataset/train_labels.csv")
-    os.remove("./dataset/test_labels.csv")
+    os.remove("./" + DATASET_DIR + "/train_labels.csv")
+    os.remove("./" + DATASET_DIR + "/test_labels.csv")
 
 if trainDirExists == False and testDirExists == False:
     os.mkdir(TRAINING_DIRECTORY)
@@ -41,14 +41,14 @@ for i, image_path in enumerate(image_paths):
 
     if i < int(len(image_paths) * 0.8):
         shutil.copy(
-            f'dataset/images/{image_path}', 'dataset/train')
+            f'"+ DATASET_DIR +"/images/{image_path}', '"+ DATASET_DIR +"/train')
         shutil.copy(
-            f'dataset/annotations/{image_path.replace("jpg", "xml")}', 'dataset/train')
+            f'"+ DATASET_DIR +"/annotations/{image_path.replace("jpg", "xml")}', '"+ DATASET_DIR +"/train')
     else:
         shutil.copy(
-            f'dataset/images/{image_path}', 'dataset/test')
+            f'"+ DATASET_DIR +"/images/{image_path}', '"+ DATASET_DIR +"/test')
         shutil.copy(
-            f'dataset/annotations/{image_path.replace("jpg", "xml")}', 'dataset/test')
+            f'"+ DATASET_DIR +"/annotations/{image_path.replace("jpg", "xml")}', '"+ DATASET_DIR +"/test')
 
 # start of the manifest creation script
 
@@ -75,7 +75,8 @@ def getData(file: str, path: str):
 for file in files_train:
     if (file.endswith("xml")):
         dat = getData(file, TRAINING_DIRECTORY)
-        file = open("./dataset/train_labels.csv", newline="", mode="a")
+        file = open("./" + DATASET_DIR + "/train_labels.csv",
+                    newline="", mode="a")
         writer = csv.writer(file, "excel")
 
         if train_labels_written == False:
@@ -87,7 +88,8 @@ for file in files_train:
 for file in files_test:
     if (file.endswith("xml")):
         dat = getData(file, TESTING_DIRECTORY)
-        file = open("./dataset/test_labels.csv", newline="", mode="a")
+        file = open("./" + DATASET_DIR + "/test_labels.csv",
+                    newline="", mode="a")
         writer = csv.writer(file, "excel")
 
         if test_labels_written == False:

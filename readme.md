@@ -59,10 +59,3 @@ Training does take an average of **10 -> 20mins depending on your machine**
 # train the tensorflow lite model
 python new.py
 ```
-
-#### Test trained model
-
-```powershell
-# you can specify an image or let it pick one
-python test.py --image ./test.jpg
-```

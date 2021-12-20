@@ -1,6 +1,8 @@
 import os
 import sys
+import io
 import xml.etree.ElementTree as et
+import json
 
 
 if sys.argv[0] == "pipeline.py":
@@ -9,12 +11,22 @@ if sys.argv[0] == "pipeline.py":
 
 
 WORKING_DIR = os.getcwd()
+CONFIG = None
 
-TRAINING_DIRECTORY = WORKING_DIR + "\\dataset\\train"
-TESTING_DIRECTORY = WORKING_DIR + "\\dataset\\test"
+with open("./config.json", "r") as config_file:
+    CONFIG = json.load(config_file)
+    config_file.close()
 
-IMAGES_DIRECTORY = WORKING_DIR + "\\dataset\\images"
-ANNOTATIONS_DIRECTORY = WORKING_DIR + "\\dataset\\annotations"
+
+print()
+
+DATASET_DIR = CONFIG["dataset-dir"]
+
+TRAINING_DIRECTORY = WORKING_DIR + "\\"+DATASET_DIR+"\\train"
+TESTING_DIRECTORY = WORKING_DIR + "\\"+DATASET_DIR+"\\test"
+
+IMAGES_DIRECTORY = WORKING_DIR + "\\"+DATASET_DIR+"\\images"
+ANNOTATIONS_DIRECTORY = WORKING_DIR + "\\"+DATASET_DIR+"\\annotations"
 
 DO_IMAGES_EXIST = os.path.exists(IMAGES_DIRECTORY)
 DO_ANNOTATIONS_EXIST = os.path.exists(ANNOTATIONS_DIRECTORY)
@@ -26,12 +38,14 @@ if DO_ANNOTATIONS_EXIST == False:
     os.mkdir(ANNOTATIONS_DIRECTORY)
 
 # list of labels in dataset
-LABEL_MAP = {
-    1: "red_shipping"
-}
+LABEL_MAP = {}
 
-DIRS_INCLUDE_IMG = ["images-1", "images-2", "images-3"]
-DIRS_INCLUDE_DATA = ["annotation-1", "annotation-2", "annotation-3"]
+# populate the label map dict with data from the config file
+for label in CONFIG["label_map"]:
+    LABEL_MAP.update({1: label})
+
+DIRS_INCLUDE_IMG = CONFIG["images"]
+DIRS_INCLUDE_DATA = CONFIG["annotations"]
 
 IMAGES = {}
 ANNOTATION = {}
@@ -67,11 +81,11 @@ def isFileMissing(ann_dir: str):
 
 def verifyIntegerty() -> bool:
     for _img in DIRS_INCLUDE_IMG:
-        files = os.listdir("./dataset/" + _img)
+        files = os.listdir("./" + DATASET_DIR + "/" + _img)
         IMAGES[_img] = files
 
     for _img in DIRS_INCLUDE_DATA:
-        files = os.listdir("./dataset/" + _img)
+        files = os.listdir("./" + DATASET_DIR + "/" + _img)
         ANNOTATION[_img] = files
 
     print(ANNOTATION.keys())
@@ -82,6 +96,6 @@ def verifyIntegerty() -> bool:
     # make this run for all the folders in the ANNOTATION object
     for _key in keys:
         for _ann in ANNOTATION[_key]:
-            isFileMissing("./dataset/annotation-1/" + _ann)
+            isFileMissing("./" + DATASET_DIR + "/annotation-1/" + _ann)
 
     return missingFiles

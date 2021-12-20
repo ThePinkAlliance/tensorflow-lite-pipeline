@@ -3,7 +3,7 @@ from tensorflow_examples.lite.model_maker.core.task.model_spec import IMAGE_CLAS
 from absl import logging
 from PIL import Image
 
-from pipeline import verifyIntegerty
+from pipeline import DATASET_DIR, verifyIntegerty
 
 import os
 import tensorflow as tf
@@ -30,10 +30,10 @@ logging.set_verbosity(logging.ERROR)
 spec = model_spec.get('efficientdet_lite0')
 
 test_data: DetectorDataLoader = object_detector.DataLoader.from_pascal_voc(
-    "./dataset/test", "./dataset/test", label_map=LABEL_MAP)
+    "./" + DATASET_DIR + "/test", "./" + DATASET_DIR + "/test", label_map=LABEL_MAP)
 
 train_data: DetectorDataLoader = object_detector.DataLoader.from_pascal_voc(
-    "./dataset/train", "./dataset/train", label_map=LABEL_MAP)
+    "./" + DATASET_DIR + "/train", "./" + DATASET_DIR + "/train", label_map=LABEL_MAP)
 
 model = object_detector.create(train_data, model_spec=spec, batch_size=8,
                                train_whole_model=True, validation_data=test_data)
@@ -156,9 +156,9 @@ def run_odt_and_draw_results(image_path, interpreter, threshold=0.5):
 # @param {type:"string"}
 DETECTION_THRESHOLD = 0.97  # @param {type:"number"}
 
-TEMP_FILE = os.listdir(WORKING_DIR + '\\dataset\\images\\')[2]
+TEMP_FILE = os.listdir(WORKING_DIR + '\\' + DATASET_DIR + '\\images\\')[2]
 
-im = Image.open(WORKING_DIR + "\\dataset\\images\\" + TEMP_FILE)
+im = Image.open(WORKING_DIR + "\\" + DATASET_DIR + "\\images\\" + TEMP_FILE)
 im.thumbnail((512, 512), Image.ANTIALIAS)
 # im.save(TEMP_FILE, 'JPG')
 
