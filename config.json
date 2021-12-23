@@ -1,6 +1,8 @@
 {
 	"dataset-dir": "dataset",
 	"images": ["images-1", "images-2", "images-3"],
+	"image-dir": "images",
+	"annotation-dir": "annotations",
 	"annotations": ["annotation-1", "annotation-2", "annotation-3"],
 	"label_map": ["red_shipping"]
 }

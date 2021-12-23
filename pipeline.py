@@ -18,15 +18,16 @@ with open("./config.json", "r") as config_file:
     config_file.close()
 
 
-print()
+print("Current Config: " + str(CONFIG))
 
 DATASET_DIR = CONFIG["dataset-dir"]
 
 TRAINING_DIRECTORY = WORKING_DIR + "\\"+DATASET_DIR+"\\train"
 TESTING_DIRECTORY = WORKING_DIR + "\\"+DATASET_DIR+"\\test"
 
-IMAGES_DIRECTORY = WORKING_DIR + "\\"+DATASET_DIR+"\\images"
-ANNOTATIONS_DIRECTORY = WORKING_DIR + "\\"+DATASET_DIR+"\\annotations"
+IMAGES_DIRECTORY = WORKING_DIR + "\\"+DATASET_DIR+"\\" + CONFIG["image-dir"]
+ANNOTATIONS_DIRECTORY = WORKING_DIR + "\\" + \
+    DATASET_DIR+"\\" + CONFIG["annotation-dir"]
 
 DO_IMAGES_EXIST = os.path.exists(IMAGES_DIRECTORY)
 DO_ANNOTATIONS_EXIST = os.path.exists(ANNOTATIONS_DIRECTORY)
@@ -91,11 +92,11 @@ def verifyIntegerty() -> bool:
     print(ANNOTATION.keys())
 
     keys = ANNOTATION.keys()
-    missingFiles = len(ANNOTATIONS_MISSING) == 0
+    missingFiles = len(ANNOTATIONS_MISSING) > 0
 
     # make this run for all the folders in the ANNOTATION object
     for _key in keys:
         for _ann in ANNOTATION[_key]:
-            isFileMissing("./" + DATASET_DIR + "/annotation-1/" + _ann)
+            isFileMissing("./" + DATASET_DIR + "/" + _key + "/" + _ann)
 
     return missingFiles
