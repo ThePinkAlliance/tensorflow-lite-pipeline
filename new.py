@@ -167,11 +167,11 @@ interpreter = tf.lite.Interpreter(model_path=model_path)
 interpreter.allocate_tensors()
 
 # Run inference and draw detection result on the local copy of the original file
-detection_result_image = run_odt_and_draw_results(
-    TEMP_FILE,
-    interpreter,
-    threshold=DETECTION_THRESHOLD
-)
+# detection_result_image = run_odt_and_draw_results(
+#     TEMP_FILE,
+#     interpreter,
+#     threshold=DETECTION_THRESHOLD
+# )
 
 # Show the detection result
-Image.fromarray(detection_result_image)
+# Image.fromarray(detection_result_image)
