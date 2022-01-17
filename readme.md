@@ -47,6 +47,9 @@ cd venv/Scripts
 # activate the virtual enviroment
 activate
 
+# Change to the parent directory where all the scripts are
+cd ..
+
 # run create-dataset script
 python create-dataset.py
 ```
