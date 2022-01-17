@@ -14,6 +14,15 @@ check `model_maker_object_detection.ipynb` for in depth look at how the model is
 
 ```powershell
 python -m venv venv
+
+# cd into the scripts directory
+cd venv/Scripts
+
+# activate the virtual enviroment
+activate
+
+# Change to the parent directory where all the scripts are
+cd ..
 ```
 
 #### Install Dependencies
@@ -26,7 +35,7 @@ pip install numpy
 pip install opencv-python
 ```
 
-#### Converting video into frames
+#### Converting video into frames (Optional)
 
 The video converter script has two flags `--video` to specify the video location
 and `--frame` will tell ffmpeg how many frames it should generate per second three is a good median.
@@ -35,28 +44,28 @@ and `--frame` will tell ffmpeg how many frames it should generate per second thr
 python convert.video.py --video ./dataset/videos/one.mp4 --dir-name images-2
 ```
 
+#### Mix data from the different folders of data
+
+mixing the data will combine all the annotations and images listed in the config.json file into annotations and images folders for create-data.py to process.
+
+```powershell
+python data.mixer.py
+```
+
 #### Create dataset
+
+create-dataset.py will take all the files in the images and annotations folders and randomly copy them to the `test` and `train` folder's for tensorflow to use.
 
 When making your own dataset use a minimum of 233 images for training
 for image labeling [labelimg](https://github.com/tzutalin/labelImg) is a good option.
 
 ```powershell
-# cd into the scripts directory
-cd venv/Scripts
-
-# activate the virtual enviroment
-activate
-
-# Change to the parent directory where all the scripts are
-cd ..
-
-# run create-dataset script
 python create-dataset.py
 ```
 
 #### Train the model
 
-Training does take an average of **10 -> 20mins depending on your machine**
+Training will take at least 10mins or more as the dataset grows
 
 ```powershell
 # train the tensorflow lite model

@@ -41,14 +41,14 @@ for i, image_path in enumerate(image_paths):
 
     if i < int(len(image_paths) * 0.8):
         shutil.copy(
-            f'"+ DATASET_DIR +"/images/{image_path}', '"+ DATASET_DIR +"/train')
+            f'' + DATASET_DIR + '/images/' + image_path + '', '' + DATASET_DIR + '/train')
         shutil.copy(
-            f'"+ DATASET_DIR +"/annotations/{image_path.replace("jpg", "xml")}', '"+ DATASET_DIR +"/train')
+            f'' + DATASET_DIR + '/annotations/' + image_path.replace("jpg", "xml") + '', '' + DATASET_DIR + '/train')
     else:
         shutil.copy(
-            f'"+ DATASET_DIR +"/images/{image_path}', '"+ DATASET_DIR +"/test')
+            f'' + DATASET_DIR + '/images/' + image_path + '', '' + DATASET_DIR + '/test')
         shutil.copy(
-            f'"+ DATASET_DIR +"/annotations/{image_path.replace("jpg", "xml")}', '"+ DATASET_DIR +"/test')
+            f'' + DATASET_DIR + '/annotations/' + image_path.replace("jpg", "xml") + '', '' + DATASET_DIR + '/test')
 
 # start of the manifest creation script
 

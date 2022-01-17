@@ -3,7 +3,7 @@ from tensorflow_examples.lite.model_maker.core.task.model_spec import IMAGE_CLAS
 from absl import logging
 from PIL import Image
 
-from pipeline import DATASET_DIR, verifyIntegerty
+from pipeline import DATASET_DIR, EXPORT_PATH, MODEL_TYPE, verifyIntegerty
 
 import os
 import tensorflow as tf
@@ -27,7 +27,9 @@ if files_missing:
 tf.get_logger().setLevel('ERROR')
 logging.set_verbosity(logging.ERROR)
 
-spec = model_spec.get('efficientdet_lite0')
+spec = model_spec.get(MODEL_TYPE)
+
+print("MODEL_TYPE: " + MODEL_TYPE)
 
 test_data: DetectorDataLoader = object_detector.DataLoader.from_pascal_voc(
     "./" + DATASET_DIR + "/test", "./" + DATASET_DIR + "/test", label_map=LABEL_MAP)
@@ -42,7 +44,7 @@ model = object_detector.create(train_data, model_spec=spec, batch_size=8,
 model.evaluate(test_data)
 
 model.export(export_dir='.')
-model.evaluate_tflite('model.tflite', test_data)
+model.evaluate_tflite(EXPORT_PATH, test_data)
 
 # ---------------------------------------------------------------------------- #
 #                                Test the model                                #

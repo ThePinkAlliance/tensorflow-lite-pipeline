@@ -2,6 +2,10 @@ import xml.etree.ElementTree as et
 import argparse
 import os
 
+"""
+bulk rename is a utility to rename every file in a specific folder
+"""
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument("--dir", default="./images-1", dest="dir")

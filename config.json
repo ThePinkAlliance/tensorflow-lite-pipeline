@@ -4,5 +4,7 @@
 	"image-dir": "images",
 	"annotation-dir": "annotations",
 	"annotations": ["annotation-1", "annotation-2", "annotation-3"],
-	"label_map": ["red_shipping"]
+	"label_map": ["red_shipping"],
+	"model-type": "efficientdet_lite0",
+	"export-path": "model.tflite"
 }

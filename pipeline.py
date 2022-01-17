@@ -20,7 +20,7 @@ with open("./config.json", "r") as config_file:
 
 print("Current Config: " + str(CONFIG))
 
-DATASET_DIR = CONFIG["dataset-dir"]
+DATASET_DIR = CONFIG["dataset-dir"] or "dataset"
 
 TRAINING_DIRECTORY = WORKING_DIR + "\\"+DATASET_DIR+"\\train"
 TESTING_DIRECTORY = WORKING_DIR + "\\"+DATASET_DIR+"\\test"
@@ -47,6 +47,9 @@ for label in CONFIG["label_map"]:
 
 DIRS_INCLUDE_IMG = CONFIG["images"]
 DIRS_INCLUDE_DATA = CONFIG["annotations"]
+
+MODEL_TYPE = CONFIG["model-type"] or "efficientdet_lite0"
+EXPORT_PATH = CONFIG["export-path"] or "model.tflite"
 
 IMAGES = {}
 ANNOTATION = {}
