@@ -1,6 +1,6 @@
 # Tensorflow Lite Pipeline
 
-if you get lost at any point check `model_maker_object_detection.ipynb` for instructions.
+check `model_maker_object_detection.ipynb` for in depth look at how the model is trained.
 
 ### Requirements
 
