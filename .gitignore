@@ -1,4 +1,6 @@
 venv/
 dataset/*
 *.tflite
+.vscode
 __pycache__/
+config.json

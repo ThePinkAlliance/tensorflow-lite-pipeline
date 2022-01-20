@@ -56,6 +56,11 @@ ANNOTATION = {}
 
 ANNOTATIONS_MISSING: list[str] = []
 
+DIRS_INCLUDE_IMG_PATHS = []
+
+for i, path in enumerate(DIRS_INCLUDE_IMG):
+    DIRS_INCLUDE_IMG_PATHS.append("./" + DATASET_DIR + "/" + path)
+
 
 def isFileMissing(ann_dir: str):
     ann_name = ann_dir.split("/")[3]
