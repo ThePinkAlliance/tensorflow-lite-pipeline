@@ -1,8 +1,8 @@
 # Tensorflow Lite Pipeline
 
-check `model_maker_object_detection.ipynb` for in depth look at how the model is trained.
+check `model_maker_object_detection.ipynb` for a in depth look at how the model is trained.
 
-### Requirements
+## Requirements
 
 - CUDA Version 11.x [download](https://developer.nvidia.com/rdp/cudnn-download)
 - cuDNN Version 8.1 [download](https://developer.nvidia.com/rdp/cudnn-archive)
@@ -10,7 +10,7 @@ check `model_maker_object_detection.ipynb` for in depth look at how the model is
 - Tensorflow 2.5.0
 - Python 3.6 -> 3.9
 
-#### Create Virtual Enviroment
+### Create Virtual Enviroment
 
 ```powershell
 python -m venv venv
@@ -25,7 +25,7 @@ activate
 cd ..
 ```
 
-#### Install Dependencies
+### Install Dependencies
 
 ```powershell
 pip install tensorflow==2.5.0
@@ -35,39 +35,37 @@ pip install numpy
 pip install opencv-python
 ```
 
-#### Converting video into frames (Optional)
+### Converting video into frames (Optional)
 
 The video converter script has two flags `--video` to specify the video location
 and `--frame` will tell ffmpeg how many frames it should generate per second three is a good median.
 
 ```ps
-python convert.video.py --video ./dataset/videos/one.mp4 --dir-name images-2
+py convert.video.py --video ./dataset/videos/one.mp4 --dir-name images-2
 ```
 
-#### Mix data from the different folders of data
+### Mix data from the different folders of data
 
 mixing the data will combine all the annotations and images listed in the config.json file into annotations and images folders for create-data.py to process.
 
 ```powershell
-python data.mixer.py
+py data.mixer.py
 ```
 
-#### Create dataset
+### Create dataset
 
 create-dataset.py will take all the files in the images and annotations folders and randomly copy them to the `test` and `train` folder's for tensorflow to use.
 
-When making your own dataset use a minimum of 233 images for training
-for image labeling [labelimg](https://github.com/tzutalin/labelImg) is a good option.
+When making your own dataset use a minimum of 233 images for training to label data using [labelimg](https://github.com/tzutalin/labelImg) is a good choice.
 
 ```powershell
-python create-dataset.py
+py create-dataset.py
 ```
 
-#### Train the model
+### Train the model
 
-Training will take at least 10mins or more as the dataset grows
+Model training collects all the annotations and images and passes them to tensorflow to start training the object detection model.
 
 ```powershell
-# train the tensorflow lite model
-python new.py
+py new.py
 ```
