@@ -1,6 +1,5 @@
 import os
 import sys
-import io
 import xml.etree.ElementTree as et
 import json
 

@@ -31,8 +31,6 @@ filesImages = os.listdir(dirImages)
 for image in filesImages:
     imageNames.append(image.title())
 
-print(imageNames)
-
 for i, filef in enumerate(filesAnnotation):
 
     imgName = imageNames[i]
@@ -49,5 +47,7 @@ for i, filef in enumerate(filesAnnotation):
     path.text = newPath
 
     x.write(dirAnnotations + "/" + filef.title())
+
+    print("FIXED: " + filef.title())
 
 print("=== FILE INFO FIXED! ===")

@@ -49,7 +49,7 @@ py convert.video.py --video ./dataset/videos/one.mp4 --dir-name images-2
 mixing the data will combine all the annotations and images listed in the config.json file into annotations and images folders for create-data.py to process.
 
 ```powershell
-py data.mixer.py
+py dataset.mixer.py
 ```
 
 ### Create dataset

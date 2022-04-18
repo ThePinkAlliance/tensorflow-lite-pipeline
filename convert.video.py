@@ -26,4 +26,4 @@ if vid_path != None:
     os.system("ffmpeg -i " + vid_path +
               " -vf fps=" + str(args.frames) + " ./dataset/"+str(dir)+"/img%02d.jpg")
 else:
-    print("::> sPlease define --video flag")
+    print("::> Please define --video flag")
