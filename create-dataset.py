@@ -4,7 +4,7 @@ import csv
 import shutil
 import random
 
-from pipeline import DATASET_DIR, IMAGES_DIRECTORY, TESTING_DIRECTORY, TRAINING_DIRECTORY
+from pipeline import ANNOTATIONS_DIRECTORY, DATASET_DIR, IMAGES_DIRECTORY, TESTING_DIRECTORY, TRAINING_DIRECTORY
 
 trainExists = os.path.isfile("./" + DATASET_DIR + "/train_labels.csv")
 testExists = os.path.isfile("./" + DATASET_DIR + "/test_labels.csv")
@@ -41,14 +41,14 @@ for i, image_path in enumerate(image_paths):
 
     if i < int(len(image_paths) * 0.8):
         shutil.copy(
-            f'' + DATASET_DIR + '/images/' + image_path + '', '' + DATASET_DIR + '/train')
+            f'' + IMAGES_DIRECTORY + "\\" + image_path + '', '' + DATASET_DIR + '/train')
         shutil.copy(
-            f'' + DATASET_DIR + '/annotations/' + image_path.replace("jpg", "xml") + '', '' + DATASET_DIR + '/train')
+            f'' + ANNOTATIONS_DIRECTORY + "\\" + image_path.replace("jpg", "xml") + '', '' + DATASET_DIR + '/train')
     else:
         shutil.copy(
-            f'' + DATASET_DIR + '/images/' + image_path + '', '' + DATASET_DIR + '/test')
+            f'' + IMAGES_DIRECTORY + "\\" + image_path + '', '' + DATASET_DIR + '/test')
         shutil.copy(
-            f'' + DATASET_DIR + '/annotations/' + image_path.replace("jpg", "xml") + '', '' + DATASET_DIR + '/test')
+            f'' + ANNOTATIONS_DIRECTORY + "\\" + image_path.replace("jpg", "xml") + '', '' + DATASET_DIR + '/test')
 
 # start of the manifest creation script
 
